@@ -6,3 +6,6 @@ src/build/*
 src/CMakeCache.txt
 src/main
 src/MyExecutable
+src/Testing/Temporary/CTestCostData.txt
+src/Testing/Temporary/LastTest.log
+src/Testing/Temporary/LastTestsFailed.log

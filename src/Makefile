@@ -65,6 +65,16 @@ CMAKE_BINARY_DIR = /home/alex/esp/project/uthash/src
 #=============================================================================
 # Targets provided globally by CMake.
 
+# Special rule for the target test
+test:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
+	/usr/bin/ctest --force-new-ctest-process $(ARGS)
+.PHONY : test
+
+# Special rule for the target test
+test/fast: test
+.PHONY : test/fast
+
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
@@ -130,6 +140,19 @@ MyExecutable/fast:
 .PHONY : MyExecutable/fast
 
 #=============================================================================
+# Target rules for targets named UnitTests
+
+# Build rule for target.
+UnitTests: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 UnitTests
+.PHONY : UnitTests
+
+# fast build rule for target.
+UnitTests/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/UnitTests.dir/build.make CMakeFiles/UnitTests.dir/build
+.PHONY : UnitTests/fast
+
+#=============================================================================
 # Target rules for targets named clean-all
 
 # Build rule for target.
@@ -142,53 +165,104 @@ clean-all/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/clean-all.dir/build.make CMakeFiles/clean-all.dir/build
 .PHONY : clean-all/fast
 
-main.o: main.cpp.o
+main.o: main.c.o
 .PHONY : main.o
 
 # target to build an object file
-main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyExecutable.dir/build.make CMakeFiles/MyExecutable.dir/main.cpp.o
-.PHONY : main.cpp.o
+main.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyExecutable.dir/build.make CMakeFiles/MyExecutable.dir/main.c.o
+.PHONY : main.c.o
 
-main.i: main.cpp.i
+main.i: main.c.i
 .PHONY : main.i
 
 # target to preprocess a source file
-main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyExecutable.dir/build.make CMakeFiles/MyExecutable.dir/main.cpp.i
-.PHONY : main.cpp.i
+main.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyExecutable.dir/build.make CMakeFiles/MyExecutable.dir/main.c.i
+.PHONY : main.c.i
 
-main.s: main.cpp.s
+main.s: main.c.s
 .PHONY : main.s
 
 # target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyExecutable.dir/build.make CMakeFiles/MyExecutable.dir/main.cpp.s
-.PHONY : main.cpp.s
+main.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyExecutable.dir/build.make CMakeFiles/MyExecutable.dir/main.c.s
+.PHONY : main.c.s
 
-moves_hashmap.o: moves_hashmap.cpp.o
+moves_hashmap.o: moves_hashmap.c.o
 .PHONY : moves_hashmap.o
 
 # target to build an object file
-moves_hashmap.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyExecutable.dir/build.make CMakeFiles/MyExecutable.dir/moves_hashmap.cpp.o
-.PHONY : moves_hashmap.cpp.o
+moves_hashmap.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyExecutable.dir/build.make CMakeFiles/MyExecutable.dir/moves_hashmap.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/UnitTests.dir/build.make CMakeFiles/UnitTests.dir/moves_hashmap.c.o
+.PHONY : moves_hashmap.c.o
 
-moves_hashmap.i: moves_hashmap.cpp.i
+moves_hashmap.i: moves_hashmap.c.i
 .PHONY : moves_hashmap.i
 
 # target to preprocess a source file
-moves_hashmap.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyExecutable.dir/build.make CMakeFiles/MyExecutable.dir/moves_hashmap.cpp.i
-.PHONY : moves_hashmap.cpp.i
+moves_hashmap.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyExecutable.dir/build.make CMakeFiles/MyExecutable.dir/moves_hashmap.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/UnitTests.dir/build.make CMakeFiles/UnitTests.dir/moves_hashmap.c.i
+.PHONY : moves_hashmap.c.i
 
-moves_hashmap.s: moves_hashmap.cpp.s
+moves_hashmap.s: moves_hashmap.c.s
 .PHONY : moves_hashmap.s
 
 # target to generate assembly for a file
-moves_hashmap.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyExecutable.dir/build.make CMakeFiles/MyExecutable.dir/moves_hashmap.cpp.s
-.PHONY : moves_hashmap.cpp.s
+moves_hashmap.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyExecutable.dir/build.make CMakeFiles/MyExecutable.dir/moves_hashmap.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/UnitTests.dir/build.make CMakeFiles/UnitTests.dir/moves_hashmap.c.s
+.PHONY : moves_hashmap.c.s
+
+tests/test_moves_hashmap.o: tests/test_moves_hashmap.c.o
+.PHONY : tests/test_moves_hashmap.o
+
+# target to build an object file
+tests/test_moves_hashmap.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/UnitTests.dir/build.make CMakeFiles/UnitTests.dir/tests/test_moves_hashmap.c.o
+.PHONY : tests/test_moves_hashmap.c.o
+
+tests/test_moves_hashmap.i: tests/test_moves_hashmap.c.i
+.PHONY : tests/test_moves_hashmap.i
+
+# target to preprocess a source file
+tests/test_moves_hashmap.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/UnitTests.dir/build.make CMakeFiles/UnitTests.dir/tests/test_moves_hashmap.c.i
+.PHONY : tests/test_moves_hashmap.c.i
+
+tests/test_moves_hashmap.s: tests/test_moves_hashmap.c.s
+.PHONY : tests/test_moves_hashmap.s
+
+# target to generate assembly for a file
+tests/test_moves_hashmap.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/UnitTests.dir/build.make CMakeFiles/UnitTests.dir/tests/test_moves_hashmap.c.s
+.PHONY : tests/test_moves_hashmap.c.s
+
+unity.o: unity.c.o
+.PHONY : unity.o
+
+# target to build an object file
+unity.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/UnitTests.dir/build.make CMakeFiles/UnitTests.dir/unity.c.o
+.PHONY : unity.c.o
+
+unity.i: unity.c.i
+.PHONY : unity.i
+
+# target to preprocess a source file
+unity.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/UnitTests.dir/build.make CMakeFiles/UnitTests.dir/unity.c.i
+.PHONY : unity.c.i
+
+unity.s: unity.c.s
+.PHONY : unity.s
+
+# target to generate assembly for a file
+unity.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/UnitTests.dir/build.make CMakeFiles/UnitTests.dir/unity.c.s
+.PHONY : unity.c.s
 
 # Help Target
 help:
@@ -198,14 +272,22 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... test"
 	@echo "... clean-all"
 	@echo "... MyExecutable"
+	@echo "... UnitTests"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
 	@echo "... moves_hashmap.o"
 	@echo "... moves_hashmap.i"
 	@echo "... moves_hashmap.s"
+	@echo "... tests/test_moves_hashmap.o"
+	@echo "... tests/test_moves_hashmap.i"
+	@echo "... tests/test_moves_hashmap.s"
+	@echo "... unity.o"
+	@echo "... unity.i"
+	@echo "... unity.s"
 .PHONY : help
 
 

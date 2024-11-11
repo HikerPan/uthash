@@ -1,19 +1,25 @@
 # 设置 CMake 最低版本和项目名称
 cmake_minimum_required(VERSION 3.10)
-project(MyCppProject)
+project(MyCProject C)
 
-# 设置 C++ 标准
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_STANDARD_REQUIRED True)
+# 设置 C 标准
+set(CMAKE_C_STANDARD 11)
+set(CMAKE_C_STANDARD_REQUIRED True)
 
 # 指定源文件
-set(SOURCES src/moves_hashmap.cpp main.cpp)
+set(SOURCES src/moves_hashmap.c)
 
-# 创建可执行文件
-add_executable(MyExecutable ${SOURCES})
-
-# 包含头文件目录
+# 创建主项目的可执行文件
+add_executable(MyExecutable ${SOURCES} src/main.c)
 target_include_directories(MyExecutable PRIVATE src)
+
+# 添加 Unity 测试可执行文件
+add_executable(UnitTests src/unity.c tests/test_moves_hashmap.c src/moves_hashmap.c)
+target_include_directories(UnitTests PRIVATE src)
+
+# 启用测试
+enable_testing()
+add_test(NAME MovesHashmapTests COMMAND UnitTests)
 
 # 添加一个自定义 clean 目标
 add_custom_target(clean-all
@@ -22,4 +28,3 @@ add_custom_target(clean-all
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
     COMMENT "Cleaning all generated files..."
 )
-
