@@ -262,10 +262,17 @@ int merge_flip_lists(IntListNode_t *dest_list, IntListNode_t *source_list) {
 void insert_moves(MoveHash_t *hashTable, MovePair_t *moves_node) {
     MoveHash_t *entry;
 
-    if(NULL == hashTable || NULL == moves_node)
-    {
-        printf("\nNULL == hashTable || NULL == moves_node\n");
+    if(NULL == moves_node){
+        printf("\nNULL == moves_node\n");
         return;
+    }
+
+    if(NULL == hashTable){
+        hashTable = (MoveHash_t *)malloc(sizeof(MoveHash_t));
+        if(NULL == hashTable){
+            printf("\nNULL == hashTable\n");
+            return;
+        }
     }
 
     // 查找键是否已存在
