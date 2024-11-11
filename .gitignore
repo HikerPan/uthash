@@ -4,3 +4,5 @@ keystat.*
 src/CMakeFiles/*
 src/build/*
 src/CMakeCache.txt
+src/main
+src/MyExecutable
