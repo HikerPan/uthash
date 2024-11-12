@@ -10,3 +10,4 @@ src/Testing/Temporary/CTestCostData.txt
 src/Testing/Temporary/LastTest.log
 src/Testing/Temporary/LastTestsFailed.log
 src/UnitTests
+uthash.code-workspace
