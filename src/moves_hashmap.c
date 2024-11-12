@@ -32,6 +32,7 @@ void list_push_front(IntListNode_t **head, int flip_position) {
     IntListNode_t *node = (IntListNode_t *)malloc(sizeof(IntListNode_t));
     if (node) {
         node->flip_position = flip_position;
+        node->next = NULL;
         LL_PREPEND(*head, node);  // 将节点添加到链表头部
     }
 }

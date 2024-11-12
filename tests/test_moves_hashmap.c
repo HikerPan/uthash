@@ -14,21 +14,36 @@ void tearDown() {
 void test_insert_moves(){
     MoveHash_t *moves = NULL;
     MovePair_t *pair = NULL;
+    IntListNode_t *node = NULL;
+    IntListNode_t *node2 = NULL;
     int flip_positions[] = {10,9,8,7,6,5,4,3,2,1,0};
 
     pair = (MovePair_t *)malloc(sizeof(MovePair_t));
     TEST_ASSERT_NOT_NULL(pair);
 
-    // pair->position = 3;
-    // for(size_t i = 0; i < sizeof(flip_positions)/sizeof(flip_positions[0]); i++){
+    pair->position = 3;
+    TEST_ASSERT_EQUAL_INT32(3, pair->position);
+    
+    pair->flip_list = NULL;
+    for(size_t i = 0; i < sizeof(flip_positions)/sizeof(flip_positions[0]); i++){
         
-    //     if(NULL == pair->flip_list){
-    //         list_push_front(&pair->flip_list, flip_positions[i]);
-    //     }
-        
-    // }
+        if(NULL == pair->flip_list){
+            list_push_front(&pair->flip_list, flip_positions[i]);
+        }
+    }
+    TEST_ASSERT_NOT_NULL(pair->flip_list);
 
-    // insert_moves(moves, pair);
+    // size_t index = sizeof(flip_positions)/sizeof(int);
+    size_t index = 0;
+    // printf("index = %d\n",index);
+    LL_FOREACH_SAFE(pair->flip_list,node,node2){
+        // printf("flip_positions[%d]: %d, flip_position = %d\n",index-1,flip_positions[index-1],node->flip_position);
+        TEST_ASSERT_EQUAL(flip_positions[index], node->flip_position);
+        index++;
+    }
+    
+    insert_moves(moves, pair);
+    // TEST_ASSERT_NOT_NULL(moves);
     
     // list_push_front(&pair->flip_list, flip_positions[0]);
 
