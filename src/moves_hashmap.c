@@ -190,44 +190,51 @@ void print_moves(MoveHash_t *moves) {
     IntListNode_t *node = NULL;
     IntListNode_t *node_tmp;
     
-    printf("\n [moves print start]\n");
+    printf("\n\n[moves print start]\n");
     HASH_ITER(hh, moves, move, tmp) {
         moves_pair = &move->moves_pair;
         printf("[key] %d, [position] %d, ", move->position,move->moves_pair.position);
         printf("[flip_list]:");
+        if(NULL == moves_pair->flip_list)
+        {
+            printf("NULL\n");
+            continue;
+        }
         LL_FOREACH_SAFE(moves_pair->flip_list, node, node_tmp){
             printf(" %d ,",node->flip_position);
         }
         printf("\n");
         
     }
-    printf("\n [moves print end]\n");
+    printf("[moves print end]\n\n");
 }
 
 
 
 
-int merge_flip_lists(IntListNode_t *dest_list, IntListNode_t *source_list) {
-    IntListNode_t *node = NULL;
-    IntListNode_t *tmp = NULL;
+int merge_flip_lists(IntListNode_t **dest_list, IntListNode_t *source_list) {
+    // IntListNode_t *node = NULL;
+    // IntListNode_t *tmp = NULL;
 
-    if(NULL == dest_list || NULL == source_list){
-        printf("invalid paramter\n");
+    if(NULL == source_list){
+        printf("source_list can not be NULL\n");
         return 0;
     }
-    LL_FOREACH_SAFE(source_list, node,tmp) {
-        IntListNode_t *new_node = (IntListNode_t *)malloc(sizeof(IntListNode_t));
-        if(NULL == new_node)
-        {
-            printf("no enough memery for new node.\n");
-            return 0;
-        }
-        new_node->flip_position = node->flip_position;
-        new_node->next = NULL;
-        LL_APPEND(dest_list, new_node);
 
-        free(node);
-    }
+    LL_CONCAT(*dest_list,source_list);
+    // LL_FOREACH_SAFE(source_list, node,tmp) {
+    //     IntListNode_t *new_node = (IntListNode_t *)malloc(sizeof(IntListNode_t));
+    //     if(NULL == new_node)
+    //     {
+    //         printf("no enough memery for new node.\n");
+    //         return 0;
+    //     }
+    //     new_node->flip_position = node->flip_position;
+    //     new_node->next = NULL;
+    //     LL_APPEND(dest_list, new_node);
+
+    //     free(node);
+    // }
 
     return 1;
 }
@@ -260,7 +267,7 @@ int merge_flip_lists(IntListNode_t *dest_list, IntListNode_t *source_list) {
 //     }
 // }
 
-void insert_moves(MoveHash_t *hashTable, MovePair_t *moves_node) {
+void insert_moves(MoveHash_t **hashTable, MovePair_t *moves_node) {
     MoveHash_t *entry;
 
     if(NULL == moves_node){
@@ -268,25 +275,27 @@ void insert_moves(MoveHash_t *hashTable, MovePair_t *moves_node) {
         return;
     }
 
-    if(NULL == hashTable){
-        hashTable = (MoveHash_t *)malloc(sizeof(MoveHash_t));
-        if(NULL == hashTable){
-            printf("\nNULL == hashTable\n");
-            return;
-        }
-    }
-
+    printf("\nmoves_node->position %d\n",moves_node->position);
     // 查找键是否已存在
-    HASH_FIND_INT(hashTable, &moves_node->position, entry);
+    HASH_FIND_INT(*hashTable, &moves_node->position, entry);
     if (entry == NULL) {
+        printf("key:%d not found, create pairs.\n",moves_node->position);
         // 如果不存在，则创建新条目
         entry = (MoveHash_t *)malloc(sizeof(MoveHash_t));
         entry->position = moves_node->position;
         entry->moves_pair.position = moves_node->position;
-        merge_flip_lists(entry->moves_pair.flip_list,moves_node->flip_list);
+        LL_CONCAT(entry->moves_pair.flip_list,moves_node->flip_list);
+        // merge_flip_lists(&entry->moves_pair.flip_list,moves_node->flip_list);
+
+        HASH_ADD_INT(*hashTable, position,entry);
+    }
+    else{
+        printf("key:%d found, merge lists.\n",moves_node->position);
+        // merge_flip_lists(&entry->moves_pair.flip_list,moves_node->flip_list);
+        LL_CONCAT(entry->moves_pair.flip_list,moves_node->flip_list);
     }
 
-    HASH_ADD_INT(hashTable, position,entry);
+    
 
 }
 

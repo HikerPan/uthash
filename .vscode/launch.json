@@ -1,0 +1,27 @@
+
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug test_moves_hashmap",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/UnitTests", // 测试可执行文件路径
+            "args": [], // 如果测试有参数，可在这里指定
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/tests", // 测试的工作目录
+            "environment": [],
+            "externalConsole": false, // VSCode 内置终端
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "启用调试信息",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "miDebuggerPath": "/usr/bin/gdb", // gdb 的路径，确保 gdb 已安装
+            "preLaunchTask": "Build Project", // 在调试前运行的任务，见 tasks.json
+        }
+    ]
+}

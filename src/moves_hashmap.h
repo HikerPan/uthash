@@ -35,9 +35,7 @@ MovePair_t *find_move(MoveHash_t *moves, int position);
 void delete_move(MoveHash_t *moves, int position);
 void clear_moves(MoveHash_t *moves);
 void print_moves(MoveHash_t *moves);
-// void insert(MoveHash_t **hashTable, int key, int value);
-int merge_flip_lists(IntListNode_t *dest_list, IntListNode_t *source_list);
-void merge(MoveHash_t **targetHashTable, MoveHash_t *sourceHashTable);
-void insert_moves(MoveHash_t *hashTable, MovePair_t *moves_node);
+int merge_flip_lists(IntListNode_t **dest_list, IntListNode_t *source_list);
+void insert_moves(MoveHash_t **hashTable, MovePair_t *moves_node);
 int size_moves(MoveHash_t *hashTable);
 #endif // MOVES_HASHMAP_H
