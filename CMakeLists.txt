@@ -6,6 +6,11 @@ project(MyCProject C)
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED True)
 
+# 设置编译选项，添加调试信息并禁用优化
+set(CMAKE_C_FLAGS_DEBUG "-O0 -g")
+set(CMAKE_BUILD_TYPE Debug)
+
+
 # 指定源文件
 set(SOURCES src/moves_hashmap.c)
 
